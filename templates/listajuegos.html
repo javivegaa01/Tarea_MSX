@@ -1,9 +1,0 @@
-
-{% extends "base.html" %}
-{% block tittle %}Lista Juegos{% endblock %}
-{% block contenido %}
-    <h1>Juegos</h1>
-    {% for juego in lista_juegos -%}
-        <h2>{{juego}}</h2>
-    {% endfor -%}
-{% endblock %}

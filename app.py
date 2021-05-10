@@ -12,19 +12,37 @@ def inicio():
 
 @app.route('/juegos',methods=["GET","POST"])
 def juegos():
-    return render_template("juegos.html",juego=datos)
-
-@app.route('/listajuegos',methods=["POST"])
-def listajuegos():
-    lista_juegos=[]
-    cad=request.form.get("search_control")
-    if cad!=" ":
-        for a in datos:
-            if str(a["nombre"]).startswith(cad):
-                lista_juegos.append(str(a["nombre"]))
+    if request.method == "GET":
+        lista_categoria=[]
+        for juegos in datos:
+            lista_categoria.append(juegos["categoria"])
+        return render_template('juegos.html', lista_categoria=set(lista_categoria))
     else:
-        for a in datos:
-            lista_juegos.append(str(a["nombre"]))
-    return render_template("listajuegos.html",lista_juegos=set(lista_juegos))
+        nombre_juego=request.form.get("nombre")
+        categoria=request.form.get("categorias")
+        lista_nombres=[]
+        lista_desarrolladores=[]
+        lista_ids=[]
+        lista_categoria=[]
+        for juegos in datos:
+            lista_categoria.append(juegos["categoria"])
+            if nombre_juego == "" and str(juegos["categoria"]) == categoria:
+                lista_desarrolladores.append(juegos["desarrollador"])
+                lista_nombres.append(juegos["nombre"])
+                lista_ids.append(juegos["id"])
+            elif str(juegos["nombre"]).startswith(nombre_juego) and str(juegos["categoria"]) == categoria:
+                lista_desarrolladores.append(juegos["desarrollador"])
+                lista_nombres.append(juegos["nombre"])
+                lista_ids.append(juegos["id"])
+    return render_template("juegos.html", nombre_juego=nombre_juego, lista_nombres=lista_nombres, lista_desarrolladores=lista_desarrolladores, lista_ids=lista_ids, lista_categoria=set(lista_categoria))
+
+
+    
+@app.route('/juego/int:<identificador>',methods=["GET","POST"])
+def idjuegos(identificador):
+    for a in datos:
+        if a["id"] == identificador:
+            return render_template('idjuegos.html', juego=a)
+
 
 app.run(debug=True)
