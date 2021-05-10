@@ -3,5 +3,7 @@
 {% block tittle %}Lista Juegos{% endblock %}
 {% block contenido %}
     <h1>Juegos</h1>
-    <h2>{{juego.nombre}}</h2>
+    {% for juego in lista_juegos -%}
+        <h2>{{juego}}</h2>
+    {% endfor -%}
 {% endblock %}

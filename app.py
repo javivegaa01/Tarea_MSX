@@ -12,11 +12,19 @@ def inicio():
 
 @app.route('/juegos',methods=["GET","POST"])
 def juegos():
-    return render_template("juegos.html")
+    return render_template("juegos.html",juego=datos)
 
 @app.route('/listajuegos',methods=["POST"])
 def listajuegos():
-    for a in datos:
-        print(a["nombre"])
-    return render_template("listajuegos.html",juego=a)
+    lista_juegos=[]
+    cad=request.form.get("search_control")
+    if cad!=" ":
+        for a in datos:
+            if str(a["nombre"]).startswith(cad):
+                lista_juegos.append(str(a["nombre"]))
+    else:
+        for a in datos:
+            lista_juegos.append(str(a["nombre"]))
+    return render_template("listajuegos.html",lista_juegos=set(lista_juegos))
+
 app.run(debug=True)
