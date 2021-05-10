@@ -16,5 +16,7 @@ def juegos():
 
 @app.route('/listajuegos',methods=["POST"])
 def listajuegos():
-    return render_template("listajuegos.html",juego=datos)
+    for a in datos:
+        print(a["nombre"])
+    return render_template("listajuegos.html",juego=a)
 app.run(debug=True)
