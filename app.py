@@ -10,4 +10,11 @@ with open("MSX.json") as fichero:
 def inicio():
 	return render_template("inicio.html")
 
+@app.route('/juegos',methods=["GET","POST"])
+def juegos():
+    return render_template("juegos.html")
+
+@app.route('/listajuegos',methods=["POST"])
+def listajuegos():
+    return render_template("listajuegos.html",juego=datos)
 app.run(debug=True)
