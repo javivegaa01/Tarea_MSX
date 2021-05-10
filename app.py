@@ -34,15 +34,15 @@ def juegos():
                 lista_desarrolladores.append(juegos["desarrollador"])
                 lista_nombres.append(juegos["nombre"])
                 lista_ids.append(juegos["id"])
-    return render_template("juegos.html", nombre_juego=nombre_juego, lista_nombres=lista_nombres, lista_desarrolladores=lista_desarrolladores, lista_ids=lista_ids, lista_categoria=set(lista_categoria))
+        return render_template("juegos.html", nombre_juego=nombre_juego, lista_nombres=lista_nombres, lista_desarrolladores=lista_desarrolladores, lista_ids=lista_ids, lista_categoria=set(lista_categoria))
 
-
-    
-@app.route('/juego/int:<identificador>',methods=["GET","POST"])
-def idjuegos(identificador):
-    for a in datos:
-        if a["id"] == identificador:
-            return render_template('idjuegos.html', juego=a)
+@app.route('/juego/<int:identificador>')
+def juego_id(identificador):
+    for juegos in datos:
+        if juegos["id"] == identificador:
+            return render_template('idjuegos.html', juego=juegos)
+        
+    return abort(404)
 
 
 app.run(debug=True)
